@@ -1,0 +1,45 @@
+def cifra_cesar(texto, deslocamento, modo):
+    texto_processado = ''
+    for char in texto:
+        if char.isalpha():  # verifica se o caractere é uma letra
+            # Obtém o código Unicode do caractere e calcula o deslocamento
+            if modo == 'criptografar':
+                codigo = ord(char) + deslocamento
+            elif modo == 'descriptografar':
+                codigo = ord(char) - deslocamento
+            if char.islower():  # se for letra minúscula
+                if codigo > ord('z'):  # se ultrapassar o limite de 'z'
+                    codigo -= 26  # volta ao começo do alfabeto
+                elif codigo < ord('a'):  # se for menor que 'a'
+                    codigo += 26  # volta ao final do alfabeto
+            elif char.isupper():  # se for letra maiúscula
+                if codigo > ord('Z'):  # se ultrapassar o limite de 'Z'
+                    codigo -= 26  # volta ao começo do alfabeto
+                elif codigo < ord('A'):  # se for menor que 'A'
+                    codigo += 26  # volta ao final do alfabeto
+            texto_processado += chr(codigo)
+        else:
+            texto_processado += char  # mantém os caracteres que não são letras
+    return texto_processado
+
+# Função para criptografar ou descriptografar o texto
+def processar_texto(texto, deslocamento, modo):
+    if modo == 'criptografar':
+        return cifra_cesar(texto, deslocamento, 'criptografar')
+    elif modo == 'descriptografar':
+        return cifra_cesar(texto, deslocamento, 'descriptografar')
+
+# Solicitar ao usuário para inserir o texto
+texto = input("Digite o texto que deseja processar: ")
+
+# Solicitar ao usuário para escolher o deslocamento
+deslocamento = int(input("Digite o deslocamento (número inteiro): "))
+
+# Solicitar ao usuário para escolher o modo (criptografar ou descriptografar)
+modo = input("Digite 'criptografar' para criptografar ou 'descriptografar' para descriptografar: ")
+
+# Processar o texto de acordo com o modo escolhido
+texto_processado = processar_texto(texto, deslocamento, modo)
+
+# Imprimir o texto processado
+print("Texto processado:", texto_processado)
